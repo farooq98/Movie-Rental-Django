@@ -1,0 +1,18 @@
+{% extends "videostore/base.html" %}
+
+{% block title %}
+    <title>Rent Movie</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h1>RENT <span class="badge bg-primary">MOVIE</span></h1>
+        {% if form %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Rent</button>
+            </form>
+        {% endif %}
+    </div>
+{% endblock content %}

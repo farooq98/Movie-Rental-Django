@@ -1,0 +1,38 @@
+{% extends "videostore/base.html" %}
+
+{% block title %}
+    <title>Rental Info</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h1>MOVIE <span class="badge bg-primary">RENTALS</span></h1>
+
+        {% if data %}
+            {% for movies in data %}
+
+                <h5>{{ movies.movie_name }}, {{ movies.movie_year }}</h5>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="bg-primary" style="color: white;">
+                            <th scope="col">Member Name</th>
+                            <th scope="col">Rent Date</th>
+                            <th scope="col">Return Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rental_info in movies.movie_rental_set.all %}
+                            <tr>
+                                <td>{{ rental_info.member_id.member_name }}</td>
+                                <td>{{ rental_info.rent_date }}</td>
+                                <td>{{ rental_info.return_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends "videostore/base.html" %}
+
+{% block title %}
+    {% if movie %}
+        <title>Delete {{movie.movie_name}}</title>
+    {% else %}
+        <title>Delete Movie</title>
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-3">
+        {% if movie %}
+            <h1>Delete <span class="badge bg-primary">{{movie.movie_name}}</span></h1>
+            <p>Are you sure that you to delete this movie</p>
+            <form method="POST", action="">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        {% else %}
+            <h1>No Movie Found</h1>
+        {% endif %}
+            
+    </div>
+{% endblock content %}

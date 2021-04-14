@@ -1,0 +1,44 @@
+{% extends "videostore/base.html" %}
+
+{% block title %}
+    <title>Member Rental Info</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-3">
+        {% if form %}
+            <h1 >RENTAL <span class="badge bg-primary">INFO!</span></h1>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% endif %}
+
+        {% if data %}
+            <h1 class="mt-3">{{ data.member_name }}</h1>
+            <table class="table table-striped">
+                <thead>
+                    <tr class="bg-primary" style="color: white;">
+                        <th scope="col">Movie Name</th>
+                        <th scope="col">Movie Genere</th>
+                        <th scope="col">Rent Date</th>
+                        <th scope="col">Return Date</th>
+                        <th scope="col">Movie Fee</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rental_info in data.movie_rental_set.all %}
+                        <tr>  
+                            <td>{{ rental_info.movie_id.movie_name }}</td>
+                            <td>{{ rental_info.movie_id.movie_genere }}</td>
+                            <td>{{ rental_info.rent_date }}</td>
+                            <td>{{ rental_info.return_date }}</td>
+                            <td>{{ rental_info.movie_id.price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock content %}
