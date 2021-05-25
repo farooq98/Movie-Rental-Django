@@ -24,6 +24,19 @@ class MovieForm(forms.ModelForm):
         widgets = {
             'movie_name': forms.TextInput(attrs={'class':'form-control'})
         }
+    
+    def clean_price(self):
+        price = self.cleaned_data["price"]
+        if price < 0:
+            raise ValidationError("Invalid Price")
+        return price
+
+    def clean_movie_year(self):
+        year = self.cleaned_data["movie_year"]
+        if year > datetime.now().date().year:
+            raise ValidationError("Invalid year")
+        return year
+    
 
 class MemberForm(forms.ModelForm):
     CHOICES = [
@@ -52,6 +65,12 @@ class MemberForm(forms.ModelForm):
             raise ValidationError("Invalid Birthday")
         return birthday
 
+    def clean_age(self):
+        age = self.cleaned_data["age"]
+        if age < 0:
+            raise ValidationError("Invalid Age")
+        return age
+
 class MovieRentalForm(forms.ModelForm):
 
     return_date = forms.DateInput()
@@ -64,6 +83,12 @@ class MovieRentalForm(forms.ModelForm):
             'movie_id': forms.Select(attrs={'class':'form-control', 'readonly':'readonly'}),
             'return_date': DateInput(attrs={'class':'form-control'}),
         }
+    
+    def clean_return_date(self):
+        return_date = self.cleaned_data['return_date']
+        if return_date.date() < datetime.now().date():
+            raise ValidationError("Invalid return date")
+        return return_date
 
 class MemberNameForm(forms.Form):
 

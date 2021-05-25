@@ -33,16 +33,15 @@ def create_member(request):
             form.save()
             data = {"strong": f"Member with name {name.title()} created", "simple": "you can now start renting movies"}
             return render(request, 'videostore/created_success.html', {"data":data})
-        else:
-            return render(request, 'videostore/error.html')
+        return render(request, 'videostore/create_member.html', {"form":form})
     form = forms.MemberForm()
     return render(request, 'videostore/create_member.html', {"form":form})
 
 def update_member_info(request, id):
     form = forms.MemberForm(request.POST or None, instance=getMember(id))
     if form.is_valid():
-          form.save()
-          return redirect('/members/')
+        form.save()
+        return redirect('/members/')
     return render(request, 'videostore/update_member.html', {"member":getMember(id), "form":form})
 
 def delete_member(request, id):      
@@ -64,16 +63,15 @@ def create_movie(request):
             form.save()
             data = {"strong": f"Movie with name {name.title()} created", "simple": "this movie can now be rented"}
             return render(request, 'videostore/created_success.html', {"data":data})
-        else:
-            return render(request, 'videostore/error.html')
+        return render(request, 'videostore/create_movie.html', {"form":form})
     form = forms.MovieForm()
     return render(request, 'videostore/create_movie.html', {"form":form})
 
 def update_movie_info(request, id):
     form = forms.MovieForm(request.POST or None, instance=getMovie(id))
     if form.is_valid():
-          form.save()
-          return redirect('/movies/')
+        form.save()
+        return redirect('/movies/')
     return render(request, 'videostore/update_movie.html', {"movie":getMovie(id), "form":form})
 
 def delete_movie(request, id):    
@@ -87,15 +85,10 @@ def rent_movie(request):
     if request.method == "POST":
         form = forms.MovieRentalForm(request.POST)
         if form.is_valid():
-            return_date = form.cleaned_data['return_date']
-            if return_date >= timezone.now():
                 form.save()
                 data = {"strong": "Thank You!", "simple": "for renting the movie, have a nice day."}
                 return render(request, 'videostore/created_success.html', {"data":data})
-            else:
-                return render(request, 'videostore/error.html')
-        else:
-            return render(request, 'videostore/error.html')
+        return render(request, 'videostore/rent_movie.html', {"form":form})
     form = forms.MovieRentalForm()
     return render(request, 'videostore/rent_movie.html', {"form":form})
 
