@@ -6,11 +6,20 @@
 
 {% block content %}
     <div class="container mt-3">
-        {% if form %}
+        {% if members %}
             <h1 >RENTAL <span class="badge bg-primary">INFO!</span></h1>
             <form method="POST" action="">
                 {% csrf_token %}
-                {{ form.as_p }}
+                <p>
+                    <label>Member Name</label>
+                </p>
+                </p>
+                    <select name="member" class="form-control">
+                        {% for member in members %}
+                            <option value="{{ member.id }}">{{ member.member_name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         {% endif %}

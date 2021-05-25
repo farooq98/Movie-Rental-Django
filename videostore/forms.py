@@ -2,6 +2,10 @@ from django import forms
 from datetime import datetime
 from django.core.exceptions import ValidationError
 from . import models
+import re
+
+movie_name_pattern = re.compile("^[a-zA-Z0-9\s]*$")
+member_name_pattern = re.compile("^[a-zA-Z\s]*$")
 
 class DateInput(forms.DateInput):
     input_type = 'date'
@@ -37,6 +41,11 @@ class MovieForm(forms.ModelForm):
             raise ValidationError("Invalid year")
         return year
     
+    def clean_movie_name(self):
+        name = self.cleaned_data["movie_name"]
+        if not movie_name_pattern.fullmatch(name):
+            raise ValidationError("Movie name can only contain characters A-Z or a-z and numbers 0-9")
+        return name.strip().title()
 
 class MemberForm(forms.ModelForm):
     CHOICES = [
@@ -58,6 +67,11 @@ class MemberForm(forms.ModelForm):
             'email_address': forms.TextInput(attrs={'class':'form-control'}),
             'birthday': DateInput(attrs={'class':'form-control'}),
         }
+    def clean_member_name(self):
+        name = self.cleaned_data["member_name"]
+        if not member_name_pattern.fullmatch(name):
+            raise ValidationError("Name can only contain characters A-Z or a-z")
+        return name.strip().title()
 
     def clean_birthday(self):
         birthday = self.cleaned_data["birthday"]

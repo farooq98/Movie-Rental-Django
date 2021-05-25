@@ -93,12 +93,11 @@ def rent_movie(request):
     return render(request, 'videostore/rent_movie.html', {"form":form})
 
 def get_customer_rental_info(request):
+    members = models.Members.objects.all()
     if request.method == "POST":
-        form = forms.MemberNameForm(request.POST)
-        if form.is_valid():
-            member_id = form.cleaned_data['member_name']
-            member = models.Members.objects.get(id=member_id)
-            return render(request, 'videostore/customer_rental_info.html', {"form":form, "data":member})
-    form = forms.MemberNameForm()
-    return render(request, 'videostore/customer_rental_info.html', {"form":form, "data":None})
+        member_id = int(request.POST.get("member"))
+        if member_id:
+            selected_member = members.get(id=member_id)
+            return render(request, 'videostore/customer_rental_info.html', {"members": members, "data": selected_member, "selected_value": member_id})
+    return render(request, 'videostore/customer_rental_info.html', {"members": members, "data": None})
 
