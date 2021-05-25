@@ -2,7 +2,7 @@ from django.contrib import admin
 from . import models
 
 class Members_Admin(admin.ModelAdmin):
-    list_display = ['__str__', 'member_address', 'member_join_date']
+    list_display = ['__str__', 'email_address', 'member_join_date']
 
 class Movies_Admin(admin.ModelAdmin):
     list_display = ['__str__', 'movie_year', 'movie_genere', 'price']

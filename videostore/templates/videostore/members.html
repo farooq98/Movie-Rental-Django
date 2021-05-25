@@ -14,8 +14,8 @@
             <thead>
                 <tr class="bg-primary" style="color: white;">
                     <th scope="col">Member Name</th>
-                    <th scope="col">Member Address</th>
-                    <th scope="col">Join Date</th>
+                    <th scope="col">Email Address</th>
+                    <th scope="col">Age</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -24,8 +24,8 @@
                     {% for member in data %}
                         <tr>  
                             <td>{{ member.member_name }}</td>
-                            <td>{{ member.member_address }}</td>
-                            <td>{{ member.member_join_date }}</td>
+                            <td>{{ member.email_address }}</td>
+                            <td>{{ member.age }}</td>
                             <td>
                                 <a href="/member/update/{{member.id}}" class="btn btn-primary" role="button" aria-pressed="true">Edit</a>
                                 <a href="/member/delete/{{member.id}}" class="btn btn-danger" role="button" aria-pressed="true">Delete</a>
